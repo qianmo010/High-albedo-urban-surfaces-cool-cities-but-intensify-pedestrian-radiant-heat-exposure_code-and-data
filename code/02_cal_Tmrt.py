@@ -55,49 +55,49 @@ def calculate_Tmrt_mrged(city_name, file_path,longitude, latitude,altitude,outpu
 
 
 
-longitude_mapping={
-    "大连": 121, "唐山": 118, "北京": 116, "天津":117,"保定":116, "石家庄": 114, "太原": 112, "烟台": 121,
-    "济南":116,  "青岛": 120, "徐州": 117, "郑州": 113,  "洛阳": 111, "西安": 108, "兰州": 103, "扬州": 119,
-    "南通": 120, "南京": 118, "嘉兴": 121, "常州": 119,"上海": 121, "芜湖": 118, "合肥": 116, "绍兴": 120, 
-    "无锡": 120, "苏州": 120, "杭州": 119, "宁波": 121, "金华": 119, "台州": 121, "温州": 120, "南昌": 115, 
-    "福州": 119, "泉州": 118, "厦门": 118, "武汉": 114, "长沙": 112, "重庆":106, "成都": 103, "贵阳":107, 
-    "昆明": 102, "南宁": 108, "中山":113,"佛山": 112, "东菀": 113, "广州": 113, "澳门": 113,"深圳": 114, 
-    "珠海": 113,"惠州": 114, "香港": 114, "汕头": 116, "海口": 110,"三亚": 109,"鄂尔多斯": 109, "银川": 106,
-    "拉萨": 91, "西宁": 101, "呼和浩特":111, "长春":125, "沈阳":123, "哈尔滨":126
+longitude_mapping = {
+    "Dalian": 121, "Tangshan": 118, "Beijing": 116, "Tianjin": 117, "Baoding": 116, "Shijiazhuang": 114, "Taiyuan": 112, "Yantai": 121,
+    "Jinan": 116, "Qingdao": 120, "Xuzhou": 117, "Zhengzhou": 113, "Luoyang": 111, "Xi'an": 108, "Lanzhou": 103, "Yangzhou": 119,
+    "Nantong": 120, "Nanjing": 118, "Jiaxing": 121, "Changzhou": 119, "Shanghai": 121, "Wuhu": 118, "Hefei": 116, "Shaoxing": 120,
+    "Wuxi": 120, "Suzhou": 120, "Hangzhou": 119, "Ningbo": 121, "Jinhua": 119, "Taizhou": 121, "Wenzhou": 120, "Nanchang": 115,
+    "Fuzhou": 119, "Quanzhou": 118, "Xiamen": 118, "Wuhan": 114, "Changsha": 112, "Chongqing": 106, "Chengdu": 103, "Guiyang": 107,
+    "Kunming": 102, "Nanning": 108, "Zhongshan": 113, "Foshan": 112, "Dongguan": 113, "Guangzhou": 113, "Macao": 113, "Shenzhen": 114,
+    "Zhuhai": 113, "Huizhou": 114, "Hong Kong": 114, "Shantou": 116, "Haikou": 110, "Sanya": 109, "Ordos": 109, "Yinchuan": 106,
+    "Lhasa": 91, "Xining": 101, "Hohhot": 111, "Changchun": 125, "Shenyang": 123, "Harbin": 126
 }
 
-
-latitude_mapping={
-    "大连":39, "唐山":39, "北京": 40, "天津": 39,"保定": 40, "石家庄": 38, "太原":37, "烟台": 37,
-    "济南": 36,  "青岛":36, "徐州": 34, "郑州":34,  "洛阳": 34, "西安": 34, "兰州": 36, "扬州": 32,
-    "南通": 32, "南京": 31, "嘉兴":30, "常州": 31,"上海": 30, "芜湖": 31, "合肥": 31, "绍兴": 30, 
-    "无锡": 31, "苏州": 31, "杭州": 29, "宁波": 29, "金华": 28, "台州": 28, "温州": 27, "南昌": 28, 
-    "福州": 26, "泉州": 24, "厦门":24, "武汉":30, "长沙": 28, "重庆": 29, "成都": 30, "贵阳":27, 
-    "昆明": 24, "南宁": 22, "中山": 22,"佛山": 22, "东菀": 22, "广州": 23, "澳门": 22,"深圳": 22, 
-    "珠海": 22,"惠州": 22, "香港": 22, "汕头": 23, "海口": 19,"三亚":18,"鄂尔多斯": 39, "银川": 38,
-    "拉萨": 26, "西宁": 36,"呼和浩特":40,"长春":43,"沈阳":41,"哈尔滨":45
+latitude_mapping = {
+    "Dalian": 39, "Tangshan": 39, "Beijing": 40, "Tianjin": 39, "Baoding": 40, "Shijiazhuang": 38, "Taiyuan": 37, "Yantai": 37,
+    "Jinan": 36, "Qingdao": 36, "Xuzhou": 34, "Zhengzhou": 34, "Luoyang": 34, "Xi'an": 34, "Lanzhou": 36, "Yangzhou": 32,
+    "Nantong": 32, "Nanjing": 31, "Jiaxing": 30, "Changzhou": 31, "Shanghai": 30, "Wuhu": 31, "Hefei": 31, "Shaoxing": 30,
+    "Wuxi": 31, "Suzhou": 31, "Hangzhou": 29, "Ningbo": 29, "Jinhua": 28, "Taizhou": 28, "Wenzhou": 27, "Nanchang": 28,
+    "Fuzhou": 26, "Quanzhou": 24, "Xiamen": 24, "Wuhan": 30, "Changsha": 28, "Chongqing": 29, "Chengdu": 30, "Guiyang": 27,
+    "Kunming": 24, "Nanning": 22, "Zhongshan": 22, "Foshan": 22, "Dongguan": 22, "Guangzhou": 23, "Macao": 22, "Shenzhen": 22,
+    "Zhuhai": 22, "Huizhou": 22, "Hong Kong": 22, "Shantou": 23, "Haikou": 19, "Sanya": 18, "Ordos": 39, "Yinchuan": 38,
+    "Lhasa": 26, "Xining": 36, "Hohhot": 40, "Changchun": 43, "Shenyang": 41, "Harbin": 45
 }
 
-
-height_mapping={
-    "大连": 27, "唐山": 90, "北京": 40, "天津": 3,"保定": 338, "石家庄": 30, "太原": 800, "烟台": 68,
-    "济南": 112,  "青岛": 50, "徐州": 50, "郑州": 108,  "洛阳": 464, "西安": 974, "兰州": 1530, "扬州": 10,
-    "南通": 4, "南京": 28, "嘉兴": 3.7, "常州": 14,"上海": 4, "芜湖": 57, "合肥": 75, "绍兴": 180, 
-    "无锡": 8, "苏州": 8, "杭州": 12, "宁波":4, "金华": 316, "台州": 141, "温州": 180, "南昌": 42, 
-    "福州": 258, "泉州": 352, "厦门": 29, "武汉": 28, "长沙": 180, "重庆": 318, "成都": 500, "贵阳": 1219, 
-    "昆明":2034, "南宁": 76, "中山": 11,"佛山": 8, "东菀": 20, "广州": 21, "澳门": 22,"深圳": 28, 
-    "珠海": 22,"惠州": 54, "香港": 1, "汕头": 55, "海口": 40,"三亚": 168,"鄂尔多斯": 1372, "银川": 1843,
-    "拉萨": 3650 ,"西宁":3137,"呼和浩特":1050,"长春":200,"沈阳":40,"哈尔滨":140
+height_mapping = {
+    "Dalian": 27, "Tangshan": 90, "Beijing": 40, "Tianjin": 3, "Baoding": 338, "Shijiazhuang": 30, "Taiyuan": 800, "Yantai": 68,
+    "Jinan": 112, "Qingdao": 50, "Xuzhou": 50, "Zhengzhou": 108, "Luoyang": 464, "Xi'an": 974, "Lanzhou": 1530, "Yangzhou": 10,
+    "Nantong": 4, "Nanjing": 28, "Jiaxing": 3.7, "Changzhou": 14, "Shanghai": 4, "Wuhu": 57, "Hefei": 75, "Shaoxing": 180,
+    "Wuxi": 8, "Suzhou": 8, "Hangzhou": 12, "Ningbo": 4, "Jinhua": 316, "Taizhou": 141, "Wenzhou": 180, "Nanchang": 42,
+    "Fuzhou": 258, "Quanzhou": 352, "Xiamen": 29, "Wuhan": 28, "Changsha": 180, "Chongqing": 318, "Chengdu": 500, "Guiyang": 1219,
+    "Kunming": 2034, "Nanning": 76, "Zhongshan": 11, "Foshan": 8, "Dongguan": 20, "Guangzhou": 21, "Macao": 22, "Shenzhen": 28,
+    "Zhuhai": 22, "Huizhou": 54, "Hong Kong": 1, "Shantou": 55, "Haikou": 40, "Sanya": 168, "Ordos": 1372, "Yinchuan": 1843,
+    "Lhasa": 3650, "Xining": 3137, "Hohhot": 1050, "Changchun": 200, "Shenyang": 40, "Harbin": 140
 }
 
-city_names = ["大连", "唐山", "北京", "天津","保定", "石家庄", "太原", "烟台",
-    "济南",  "青岛", "徐州", "郑州",  "洛阳", "西安", "兰州", "扬州",
-    "南通", "南京", "嘉兴", "常州","上海", "芜湖", "合肥", "绍兴", 
-    "无锡", "苏州", "杭州", "宁波", "金华", "台州", "温州", "南昌", 
-    "福州", "泉州", "厦门", "武汉", "长沙", "重庆", "成都", "贵阳", 
-    "昆明", "南宁", "中山","佛山", "东菀", "广州", "澳门","深圳", 
-    "珠海","惠州", "香港", "汕头", "海口","三亚","鄂尔多斯", "银川",
-    "拉萨" ,"西宁","呼和浩特","长春","沈阳","哈尔滨"]
+city_names = [
+    "Dalian", "Tangshan", "Beijing", "Tianjin", "Baoding", "Shijiazhuang", "Taiyuan", "Yantai",
+    "Jinan", "Qingdao", "Xuzhou", "Zhengzhou", "Luoyang", "Xi'an", "Lanzhou", "Yangzhou",
+    "Nantong", "Nanjing", "Jiaxing", "Changzhou", "Shanghai", "Wuhu", "Hefei", "Shaoxing",
+    "Wuxi", "Suzhou", "Hangzhou", "Ningbo", "Jinhua", "Taizhou", "Wenzhou", "Nanchang",
+    "Fuzhou", "Quanzhou", "Xiamen", "Wuhan", "Changsha", "Chongqing", "Chengdu", "Guiyang",
+    "Kunming", "Nanning", "Zhongshan", "Foshan", "Dongguan", "Guangzhou", "Macao", "Shenzhen",
+    "Zhuhai", "Huizhou", "Hong Kong", "Shantou", "Haikou", "Sanya", "Ordos", "Yinchuan",
+    "Lhasa", "Xining", "Hohhot", "Changchun", "Shenyang", "Harbin"
+]
 
 for city_name in city_names:
     file_path = f"../{city_name}"

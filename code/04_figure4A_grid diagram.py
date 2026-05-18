@@ -6,18 +6,22 @@ import jenkspy
 
 plt.rcParams['font.serif'] = ['Arial']
 
-shp_dir   = r"...\data\urban morphology_shp"
-tmrt_dir  = r"...\data\figure4_data"
+shp_dir   = r"D:/script/data/04_urban morphology_shp/"
+tmrt_dir  = r"D:/script/data/03_figure4_data/"
 
 out_pic = ".../grid/"
 out_shp = ".../shp/"
 
-city_names = ["澳门","保定","成都","大连","鄂尔多斯","佛山","广州","杭州","合肥","惠州",
-              "济南","金华","昆明","拉萨","兰州","南宁","南通","宁波","青岛","泉州","三亚",
-              "厦门","汕头","深圳","石家庄","苏州","台州","太原","唐山","芜湖","武汉",
-              "西安","扬州","银川","郑州","中山","珠海","上海","北京","重庆","南京","长沙","东莞",
-              "无锡","福州","贵阳","南昌","常州","嘉兴","徐州",
-              "绍兴","烟台","海口","洛阳","西宁","天津","香港","哈尔滨","呼和浩特","长春","沈阳","温州"]
+city_names = [
+    "Dalian", "Tangshan", "Beijing", "Tianjin", "Baoding", "Shijiazhuang", "Taiyuan", "Yantai",
+    "Jinan", "Qingdao", "Xuzhou", "Zhengzhou", "Luoyang", "Xi'an", "Lanzhou", "Yangzhou",
+    "Nantong", "Nanjing", "Jiaxing", "Changzhou", "Shanghai", "Wuhu", "Hefei", "Shaoxing",
+    "Wuxi", "Suzhou", "Hangzhou", "Ningbo", "Jinhua", "Taizhou", "Wenzhou", "Nanchang",
+    "Fuzhou", "Quanzhou", "Xiamen", "Wuhan", "Changsha", "Chongqing", "Chengdu", "Guiyang",
+    "Kunming", "Nanning", "Zhongshan", "Foshan", "Dongguan", "Guangzhou", "Macao", "Shenzhen",
+    "Zhuhai", "Huizhou", "Hong Kong", "Shantou", "Haikou", "Sanya", "Ordos", "Yinchuan",
+    "Lhasa", "Xining", "Hohhot", "Changchun", "Shenyang", "Harbin"
+]
 
 all_tmrt_values = []
 all_cool_values = []
@@ -127,11 +131,11 @@ for city in city_names:
     ax.axis('off')
 
     plt.tight_layout()
-    plt.savefig(f"{out_pic}{city}.svg", dpi=300, bbox_inches='tight', transparent=True)
+    #plt.savefig(f"{out_pic}{city}.svg", dpi=300, bbox_inches='tight', transparent=True)
     plt.show()
     plt.close()
 
-    grid_gdf.to_file(f"{out_shp}{city}.shp", encoding='utf-8')
+    #grid_gdf.to_file(f"{out_shp}{city}.shp", encoding='utf-8')
 
     print(f"{city} ")
 

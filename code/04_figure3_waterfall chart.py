@@ -14,7 +14,6 @@ def create_tmrt_plot(ax, density_df, group_name, city_name):
     tmrt_grasscover_mean = density_df['Tmrt0_grasscover'].mean()
     tmrt_treecover_mean = density_df['Tmrt0_treecover'].mean()
     Tmrt_shortwave = density_df['Tmrt_shortwave'].mean()
-    Tmrt_longwave = density_df['Tmrt_longwave'].mean()
     Tmrt_combined = density_df['Tmrt_combined'].mean()
 
     Eshort_mean = density_df['Eshort00'].mean()
@@ -38,13 +37,13 @@ def create_tmrt_plot(ax, density_df, group_name, city_name):
 
     colors = [
         '#927661',  # wasteland 
-        '#6E6F83',  # vertohor 
-        '#AFDCCA',  # grasscover
-        '#83AD7B',  # treecover
-        '#AE727C',  # basic albedo
-        '#A8A8D8',  # basic-S
-        '#D9A7A9',  # basic-L
-        '#79A8AB'   # high albedo
+        '#6E6F83',  # building 
+        '#AAD09D',  # grasscover
+        '#66BC98',  # treecover
+        '#9ECAE1',  # basic albedo
+        '#FCDC89',  # basic-S
+        "#9E9AC8",  # basic-L
+        '#B7518B'   # high albedo
     ]
 
     color_short = '#C3C5C9' 
@@ -153,25 +152,28 @@ def plot_all_density_groups(file_path, city_name):
     
     # 保存图像
     output_path = f".../{city_name}.svg"
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    #plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.show()
     plt.close()
     
     print(f"Saved: {city_name}")
 
 def analyze_all_cities():
-    city_names = ["澳门","保定","成都","大连","鄂尔多斯","佛山","广州","杭州","合肥","惠州",
-              "济南","金华","昆明","拉萨","兰州","南宁","南通","宁波","青岛","泉州","三亚",
-              "厦门","汕头","深圳","石家庄","苏州","台州","太原","唐山","芜湖","武汉",
-              "西安","扬州","银川","郑州","中山","珠海","上海","北京","重庆","南京","长沙","东莞",
-              "无锡","福州","贵阳","南昌","常州","嘉兴","徐州","海口"
-              "绍兴","烟台","洛阳","西宁","天津","香港","哈尔滨","呼和浩特","长春","沈阳",]     
+    city_names = [
+    "Dalian", "Tangshan", "Beijing", "Tianjin", "Baoding", "Shijiazhuang", "Taiyuan", "Yantai",
+    "Jinan", "Qingdao", "Xuzhou", "Zhengzhou", "Luoyang", "Xi'an", "Lanzhou", "Yangzhou",
+    "Nantong", "Nanjing", "Jiaxing", "Changzhou", "Shanghai", "Wuhu", "Hefei", "Shaoxing",
+    "Wuxi", "Suzhou", "Hangzhou", "Ningbo", "Jinhua", "Taizhou", "Wenzhou", "Nanchang",
+    "Fuzhou", "Quanzhou", "Xiamen", "Wuhan", "Changsha", "Chongqing", "Chengdu", "Guiyang",
+    "Kunming", "Nanning", "Zhongshan", "Foshan", "Dongguan", "Guangzhou", "Macao", "Shenzhen",
+    "Zhuhai", "Huizhou", "Hong Kong", "Shantou", "Haikou", "Sanya", "Ordos", "Yinchuan",
+    "Lhasa", "Xining", "Hohhot", "Changchun", "Shenyang", "Harbin"]
 
 
     for city_name in city_names:
         
         print(f"Processing: {city_name}")
-        file_path = f".../data/figure3_data/{city_name}.csv"
+        file_path = f".../data/02_figure3_data/{city_name}.csv"
         plot_all_density_groups(file_path, city_name)
 # 运行分析
 analyze_all_cities()

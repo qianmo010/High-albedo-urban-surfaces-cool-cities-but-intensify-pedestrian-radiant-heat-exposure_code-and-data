@@ -15,29 +15,21 @@ tmrt_dir = r"...\data\03_figure4_data"
 bld_file = r"...\data\all_cities_blddensity.xlsx"
 height_file = r"...\data\all_cities_bldheight.xlsx"
 
-# ================= city mapping =================
-city_names_cn = ["澳门","保定","成都","大连","鄂尔多斯","佛山","广州","杭州","合肥","惠州",
-                 "济南","金华","昆明","拉萨","兰州","南宁","南通","宁波","青岛","泉州","三亚",
-                 "厦门","汕头","深圳","石家庄","苏州","台州","太原","唐山","芜湖","武汉",
-                 "西安","扬州","银川","郑州","中山","珠海","上海","北京","重庆","南京","长沙","东莞",
-                 "无锡","福州","贵阳","南昌","常州","嘉兴","徐州",
-                 "绍兴","烟台","海口","洛阳","西宁","天津","香港","哈尔滨","呼和浩特","长春","沈阳","温州"]
-
-city_name_map = {k: v for k, v in zip(city_names_cn, [
-    "Macao","Baoding","Chengdu","Dalian","Ordos","Foshan","Guangzhou","Hangzhou","Hefei","Huizhou",
-    "Jinan","Jinhua","Kunming","Lhasa","Lanzhou","Nanning","Nantong","Ningbo","Qingdao","Quanzhou","Sanya",
-    "Xiamen","Shantou","Shenzhen","Shijiazhuang","Suzhou","Taizhou","Taiyuan","Tangshan","Wuhu","Wuhan",
-    "Xi'an","Yangzhou","Yinchuan","Zhengzhou","Zhongshan","Zhuhai","Shanghai","Beijing","Chongqing","Nanjing",
-    "Changsha","Dongguan","Wuxi","Fuzhou","Guiyang","Nanchang","Changzhou","Jiaxing","Xuzhou",
-    "Shaoxing","Yantai","Haikou","Luoyang","Xining","Tianjin","Hong Kong","Harbin","Hohhot","Changchun","Shenyang"
-])}
+# ================= city names (英文) =================
+city_names_en = [
+    "Macao", "Baoding", "Chengdu", "Dalian", "Ordos", "Foshan", "Guangzhou", "Hangzhou", "Hefei", "Huizhou",
+    "Jinan", "Jinhua", "Kunming", "Lhasa", "Lanzhou", "Nanning", "Nantong", "Ningbo", "Qingdao", "Quanzhou", "Sanya",
+    "Xiamen", "Shantou", "Shenzhen", "Shijiazhuang", "Suzhou", "Taizhou", "Taiyuan", "Tangshan", "Wuhu", "Wuhan",
+    "Xi'an", "Yangzhou", "Yinchuan", "Zhengzhou", "Zhongshan", "Zhuhai", "Shanghai", "Beijing", "Chongqing", "Nanjing",
+    "Changsha", "Dongguan", "Wuxi", "Fuzhou", "Guiyang", "Nanchang", "Changzhou", "Jiaxing", "Xuzhou",
+    "Shaoxing", "Yantai", "Haikou", "Luoyang", "Xining", "Tianjin", "Hong Kong", "Harbin", "Hohhot", "Changchun", "Shenyang"
+]
 
 all_tmrt_values = []
 all_cool_values = []
 
-for city in city_names_cn:
-    
-    m_path  = os.path.join(tmrt_dir, f"{city}.xlsx")
+for city in city_names_en:
+    m_path = os.path.join(tmrt_dir, f"{city}.xlsx")
     m = pd.read_excel(m_path)  
     m = m[m['blddensity'] > 0.03]
     all_tmrt_values.extend(m['ΔTmrt'].dropna().values)
@@ -80,10 +72,9 @@ color_dict = {
 }
 ordered_categories = list(color_dict.keys())
 
-
 records = []
-for city in city_names_cn:
-    m_path  = os.path.join(tmrt_dir, f"{city}.xlsx")
+for city in city_names_en:
+    m_path = os.path.join(tmrt_dir, f"{city}.xlsx")
     m = pd.read_excel(m_path)
     m = m[m['blddensity'] > 0.03]
 
@@ -94,7 +85,7 @@ for city in city_names_cn:
     counts = m['Category'].value_counts(normalize=True)
     for cat in ordered_categories:
         records.append({
-            'city': city_name_map.get(city, city),
+            'city': city,  # 直接使用英文名
             'Category': cat,
             'Proportion': counts.get(cat, 0)
         })
@@ -103,21 +94,21 @@ plot_df = pd.DataFrame(records)
 
 # ================= building data =================
 bld_df = pd.read_excel(bld_file)
-bld_df['city'] = bld_df['city'].str.replace('.xlsx','', regex=False).map(city_name_map)
+bld_df['city'] = bld_df['city'].str.replace('.xlsx', '', regex=False)  # 直接使用英文名，不需要map
 
 height_df = pd.read_excel(height_file)
-height_df['city'] = height_df['city'].str.replace('.xlsx','', regex=False).map(city_name_map)
+height_df['city'] = height_df['city'].str.replace('.xlsx', '', regex=False)  # 直接使用英文名
 
 density_raw = bld_df.set_index('city')['mean_blddensity']
 height_raw = height_df.set_index('city')['mean_bldheight']
 
 city_abbr = {
-    'Harbin':'HRB','Beijing':'BJ', 'Shanghai':'SH', 'Wuhan':'WH',
-    'Guangzhou':'GZ','Kunming':'KM','Lhasa':'LXA','Haikou':'HK'
+    'Harbin': 'HRB', 'Beijing': 'BJ', 'Shanghai': 'SH', 'Wuhan': 'WH',
+    'Guangzhou': 'GZ', 'Kunming': 'KM', 'Lhasa': 'LXA', 'Haikou': 'HK'
 }
 
 # ================= plot =================
-fig, ax = plt.subplots(figsize=(10,5))
+fig, ax = plt.subplots(figsize=(10, 5))
 
 x_min, x_max = height_raw.min(), height_raw.max()
 y_min, y_max = density_raw.min(), density_raw.max()
@@ -137,23 +128,23 @@ def draw_city_pie(city_name):
     sizes = []
     colors_with_alpha = []
     for cat in ordered_categories:
-        val = city_data[city_data['Category']==cat]['Proportion'].values[0]
+        val = city_data[city_data['Category'] == cat]['Proportion'].values[0]
         sizes.append(val)
         colors_with_alpha.append(to_rgba(color_dict[cat], GLOBAL_ALPHA))
 
     width = x_range * pie_size
-    height_ax = (y_max - y_min) * pie_size * (fig.get_size_inches()[0]/fig.get_size_inches()[1])
+    height_ax = (y_max - y_min) * pie_size * (fig.get_size_inches()[0] / fig.get_size_inches()[1])
 
     pie_ax = ax.inset_axes([x - width/2, y - height_ax/2, width, height_ax], transform=ax.transData)
 
     z = 20 if city_name in city_abbr else 2
-    wedges, _ = pie_ax.pie(sizes, colors=colors_with_alpha, wedgeprops={'edgecolor':'none'})
+    wedges, _ = pie_ax.pie(sizes, colors=colors_with_alpha, wedgeprops={'edgecolor': 'none'})
     pie_ax.set_aspect('equal')
     pie_ax.axis('off')
     pie_ax.set_zorder(z)
 
     if city_name in city_abbr:
-        circle = plt.Circle((0,0), 1, transform=pie_ax.transData, fill=False, edgecolor='black', linewidth=0.4, zorder=25)
+        circle = plt.Circle((0, 0), 1, transform=pie_ax.transData, fill=False, edgecolor='black', linewidth=0.4, zorder=25)
         pie_ax.add_artist(circle)
 
 for city in density_raw.index:
@@ -162,8 +153,8 @@ for city in density_raw.index:
 for city in city_abbr.keys():
     draw_city_pie(city)
 
-ax.set_xlim(x_min - x_range*0.05, x_max + x_range*0.05)
-ax.set_ylim(y_min - (y_max-y_min)*0.05, y_max + (y_max-y_min)*0.05)
+ax.set_xlim(x_min - x_range * 0.05, x_max + x_range * 0.05)
+ax.set_ylim(y_min - (y_max - y_min) * 0.05, y_max + (y_max - y_min) * 0.05)
 
 ax.set_xlabel("Building height (m)", fontsize=16)
 ax.set_ylabel("Building coverage", fontsize=16)
@@ -175,7 +166,7 @@ ax.spines['bottom'].set_linewidth(1)
 ax.tick_params(axis='both', labelsize=16)
 
 plt.tight_layout()
-plt.savefig(".../pie.svg", bbox_inches='tight', facecolor='white')
+#plt.savefig(".../pie.svg", bbox_inches='tight', facecolor='white')
 plt.show()
 
 print("Completed")

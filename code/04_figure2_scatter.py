@@ -8,27 +8,20 @@ plt.rcParams['font.serif'] = ['Arial']
 plt.rcParams['xtick.direction'] = 'out'
 plt.rcParams['ytick.direction'] = 'out'
 
-RESULT_FOLDER = r"\data\02_figure2_data"
+RESULT_FOLDER = r".../data/02_figure2_data/"
 
-city_name_mapping = {
-    "哈尔滨":"Harbin","北京": "Beijing", "上海": "Shanghai", "拉萨": "Lhasa",
-    "昆明": "Kunming", "武汉":"Wuhan","广州": "Guangzhou","海口": "Haikou",
-}
-chinese_city_names = list(city_name_mapping.keys())
-english_city_names = [city_name_mapping[c] for c in chinese_city_names]
+english_city_names = ["Harbin", "Beijing", "Shanghai", "Lhasa", "Kunming", "Wuhan", "Guangzhou", "Haikou"]
 
 y_variables = ["ΔTs", "ΔCUHI", "ΔTmrt"]
 x_variables = ["vertohor", "blddensity", "bldheight"]
 
 all_data = []
 
-# 遍历读取指定文件夹内各城市结果表
-for city_name in chinese_city_names:
+for city_name in english_city_names:
     file_path = f"{RESULT_FOLDER}{city_name}.csv"
     print(f"读取文件: {file_path}")
     df = pd.read_csv(file_path, encoding="utf-8-sig")
 
-    # 宽表转长表，适配原有绘图结构
     for x_col in x_variables:
         # ΔTmrt
         tmp1 = df[["Id", x_col, "ΔTmrt"]].rename(columns={x_col:"x_value", "ΔTmrt":"diff"})
@@ -46,7 +39,7 @@ for city_name in chinese_city_names:
         tmp2["period"] = "noon"
         all_data.append(tmp2)
 
-        # ΔUHI → 匹配原字段名ΔCUHI
+        # ΔCUHI
         tmp3 = df[["Id", x_col, "ΔUHI"]].rename(columns={x_col:"x_value", "ΔUHI":"diff"})
         tmp3["city"] = city_name
         tmp3["x_variable"] = x_col
@@ -56,10 +49,8 @@ for city_name in chinese_city_names:
 
 all_data = pd.concat(all_data, ignore_index=True)
 noon_data = all_data.copy()
-# 保留你原有异常值过滤
 noon_data = noon_data[~((noon_data["indicator"] == "ΔCUHI") & (noon_data["diff"] < -0.6))]
 
-# ---------- 以下绘图代码完全原样保留，无任何改动 ----------
 city_colors = {
     "Beijing": "#6090C1", "Shanghai": "#ACD2E5", "Harbin": "#FEE395",
     "Lhasa": "#D7312D", "Haikou": "#F2724D", "Wuhan": "#F79015",
@@ -86,10 +77,10 @@ for row, y_var in enumerate(y_variables):
         sub = y_data[y_data["x_variable"] == x_var]
         ax = axs[row, col]
 
-        for chinese_city, english_city in zip(chinese_city_names, english_city_names):
-            city_data = sub[sub["city"] == chinese_city].sort_values("x_value")
+        for city_name in english_city_names:
+            city_data = sub[sub["city"] == city_name].sort_values("x_value")
             x, y = city_data["x_value"].values, city_data["diff"].values
-            ax.scatter(x, y, color=city_colors[english_city], alpha=0.1, s=30)
+            ax.scatter(x, y, color=city_colors[city_name], alpha=0.1, s=30)
 
             if len(x) >= 3:
                 try:
@@ -105,11 +96,11 @@ for row, y_var in enumerate(y_variables):
                     confidence = t_val * se
 
                     ax.plot(x_smooth, y_smooth,
-                            color=city_colors[english_city], lw=3, label=english_city)
+                            color=city_colors[city_name], lw=3, label=city_name)
                     ax.fill_between(x_smooth,
                                     y_smooth - confidence,
                                     y_smooth + confidence,
-                                    color=city_colors[english_city], alpha=0.2)
+                                    color=city_colors[city_name], alpha=0.2)
                 except (np.linalg.LinAlgError, ValueError):
                     coeffs = np.polyfit(x, y, deg=2)
                     poly = np.poly1d(coeffs)
@@ -119,11 +110,11 @@ for row, y_var in enumerate(y_variables):
                     stderr = np.std(residuals)
                     confidence = 1.96 * stderr
                     ax.plot(x_smooth, y_smooth,
-                            color=city_colors[english_city], lw=3, label=english_city)
+                            color=city_colors[city_name], lw=3, label=city_name)
                     ax.fill_between(x_smooth,
                                     y_smooth - confidence,
                                     y_smooth + confidence,
-                                    color=city_colors[english_city], alpha=0.2)
+                                    color=city_colors[city_name], alpha=0.2)
 
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
