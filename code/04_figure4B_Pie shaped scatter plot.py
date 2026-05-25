@@ -15,7 +15,7 @@ tmrt_dir = r"...\data\03_figure4_data"
 bld_file = r"...\data\all_cities_blddensity.xlsx"
 height_file = r"...\data\all_cities_bldheight.xlsx"
 
-# ================= city names (英文) =================
+# ================= city names  =================
 city_names_en = [
     "Macao", "Baoding", "Chengdu", "Dalian", "Ordos", "Foshan", "Guangzhou", "Hangzhou", "Hefei", "Huizhou",
     "Jinan", "Jinhua", "Kunming", "Lhasa", "Lanzhou", "Nanning", "Nantong", "Ningbo", "Qingdao", "Quanzhou", "Sanya",
@@ -85,7 +85,7 @@ for city in city_names_en:
     counts = m['Category'].value_counts(normalize=True)
     for cat in ordered_categories:
         records.append({
-            'city': city,  # 直接使用英文名
+            'city': city, 
             'Category': cat,
             'Proportion': counts.get(cat, 0)
         })
@@ -94,10 +94,10 @@ plot_df = pd.DataFrame(records)
 
 # ================= building data =================
 bld_df = pd.read_excel(bld_file)
-bld_df['city'] = bld_df['city'].str.replace('.xlsx', '', regex=False)  # 直接使用英文名，不需要map
+bld_df['city'] = bld_df['city'].str.replace('.xlsx', '', regex=False)  
 
 height_df = pd.read_excel(height_file)
-height_df['city'] = height_df['city'].str.replace('.xlsx', '', regex=False)  # 直接使用英文名
+height_df['city'] = height_df['city'].str.replace('.xlsx', '', regex=False)
 
 density_raw = bld_df.set_index('city')['mean_blddensity']
 height_raw = height_df.set_index('city')['mean_bldheight']

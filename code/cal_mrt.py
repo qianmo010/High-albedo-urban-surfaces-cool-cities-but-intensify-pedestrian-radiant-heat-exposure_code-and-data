@@ -26,7 +26,7 @@ def calc_solarparam(time_str, latitude, longitude, altitude, groundalbedo=0.18, 
     # Solar position angles (Zenith and Azimuth)
 
 
-    solar_pmt =  thisloc.get_clearsky(thistime,model='ineichen') #
+    solar_pmt =  thisloc.get_clearsky(thistime,model='ineichen') 
     E_sol= solar_pmt['dni'][0] #direct normal solar irradiation  [W/m^2] for clear sky  
     E_totalglobalradiation = solar_pmt['ghi'][0]   # total global radiation
     E_dhi = solar_pmt['dhi'][0]   # total global radiation

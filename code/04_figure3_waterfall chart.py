@@ -132,7 +132,7 @@ def plot_all_density_groups(file_path, city_name):
         duplicates='drop'
     )
 
-    # 创建3个子图
+    # Create 3 subgraphs
     fig, axes = plt.subplots(1, 3, figsize=(27, 7.5), sharey=True)
     for i, group_name in enumerate(['low', 'medium', 'high']):
         group_df = df[df['density_group'] == group_name]
@@ -146,11 +146,11 @@ def plot_all_density_groups(file_path, city_name):
                         ha='center', va='center', transform=axes[i].transAxes)
             #axes[i].set_title(group_name, fontsize=40)
     
-    # 设置整体标题
+    # set titles
     #plt.suptitle(f'{city_name}', fontsize=24, y=0.98)
     plt.tight_layout()
     
-    # 保存图像
+    # save figures
     output_path = f".../{city_name}.svg"
     #plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.show()
@@ -175,5 +175,5 @@ def analyze_all_cities():
         print(f"Processing: {city_name}")
         file_path = f".../data/02_figure3_data/{city_name}.csv"
         plot_all_density_groups(file_path, city_name)
-# 运行分析
+
 analyze_all_cities()
